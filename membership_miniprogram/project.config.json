@@ -1,0 +1,28 @@
+{
+	"appid": "wx26c9abcc7b785e84",
+	"compileType": "miniprogram",
+	"libVersion": "3.4.9",
+	"packOptions": {
+		"ignore": [],
+		"include": []
+	},
+	"setting": {
+		"coverView": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"enhance": true,
+		"showShadowRootInWxmlPanel": true,
+		"packNpmRelationList": [],
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"condition": {},
+	"editorSetting": {
+		"tabIndent": "tab",
+		"tabSize": 4
+	}
+}
