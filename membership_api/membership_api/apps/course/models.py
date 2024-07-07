@@ -87,6 +87,7 @@ class HomeWork(BaseModel):
                                  default=0)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, verbose_name='课程', null=True,
                                blank=True)
+    topic = models.ManyToManyField('Topic', verbose_name='题目', help_text='作业与题目多对多')
 
     class Meta:
         db_table = 'mi_homework'
@@ -103,10 +104,10 @@ class Topic(BaseModel):
     type = models.IntegerField(verbose_name='题目类型', choices=type_choices)
     course = models.ManyToManyField(Course, verbose_name='课程', db_table='mi_topic_course')
     score = models.IntegerField(verbose_name='题目分数')
-    op_a = models.CharField(max_length=255, verbose_name='选项A', null=True)
-    op_b = models.CharField(max_length=255, verbose_name='选项B', null=True)
-    op_c = models.CharField(max_length=255, verbose_name='选项C', null=True)
-    op_d = models.CharField(max_length=255, verbose_name='选项D', null=True)
+    op_a = models.CharField(max_length=255, verbose_name='选项A', null=True, blank=True)
+    op_b = models.CharField(max_length=255, verbose_name='选项B', null=True, blank=True)
+    op_c = models.CharField(max_length=255, verbose_name='选项C', null=True, blank=True)
+    op_d = models.CharField(max_length=255, verbose_name='选项D', null=True, blank=True)
 
     class Meta:
         db_table = 'mi_topic'
@@ -119,7 +120,7 @@ class Answer(BaseModel):
                               blank=True)
     student = models.ForeignKey('user.Student', on_delete=models.SET_NULL, verbose_name='学生', null=True,
                                 blank=True)
-    answer = models.CharField(max_length=255, verbose_name='学生答案')
+    answer = models.TextField(verbose_name='学生答案')
     result = models.IntegerField(verbose_name='学生答案结果', choices=((0, '未批改'), (1, '正确'), (2, '错误')),
                                  default=0)
 
