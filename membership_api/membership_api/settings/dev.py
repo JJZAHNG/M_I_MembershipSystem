@@ -20,7 +20,8 @@ INSTALLED_APPS = [
     'user',
     'course',
     'mall',
-    'member'
+    'member',
+    'system',
 ]
 
 MIDDLEWARE = [
@@ -29,22 +30,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'membership_api.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [BASE_DIR / 'templates']
+#         ,
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
 
 WSGI_APPLICATION = 'membership_api.wsgi.application'
 
@@ -229,3 +230,13 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
 # 时区配置
 CELERY_TIMEZONE = 'Asia/Shanghai'
+
+# from datetime import timedelta
+#
+# CELERY_BEAT_SCHEDULE = {
+#     'mysql_backup': {
+#         'task': 'system.tasks.mysql_backup',
+#         'schedule': timedelta(seconds=5),
+#         'args': ()
+#     },
+# }
