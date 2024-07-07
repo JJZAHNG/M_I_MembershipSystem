@@ -4,10 +4,10 @@ from pathlib import Path
 
 # membership_api/
 BASE_DIR = Path(__file__).resolve().parent.parent
-# membership_api/membership_api
-sys.path.append(os.path.join(BASE_DIR, 'membership_api'))
+# membership_api/membership_apiresolve
+sys.path.append(os.path.join(BASE_DIR))
 # membership_api/membership_api/apps
-sys.path.append(os.path.join(BASE_DIR, 'membership_api', 'apps'))
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 SECRET_KEY = 'django-insecure-gqj6t8bl@no8sb2&ftm^kgs7-vzoi%m)s3@n^^-ey7t@g)-m&f'
 
@@ -157,7 +157,7 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'utils.common_logger.InterceptTimedRotatingFileHandler',
             # 日志位置,日志文件名
-            'filename': os.path.join(BASE_DIR, "logs", "rbac.log"),
+            'filename': os.path.join(BASE_DIR, "logs", "mi.log"),
             # 日志文件的最大值,这里我们设置300M
             # 'maxBytes': 300 * 1024 * 1024,
             # 日志文件的数量,设置最大日志数量为10
