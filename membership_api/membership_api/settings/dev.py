@@ -1,10 +1,11 @@
 import os
 import sys
 from pathlib import Path
+from datetime import timedelta
 
 # membership_api/
 BASE_DIR = Path(__file__).resolve().parent.parent
-# membership_api/membership_apiresolve
+# membership_api/membership_api
 sys.path.append(os.path.join(BASE_DIR))
 # membership_api/membership_api/apps
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
@@ -133,52 +134,52 @@ CORS_ALLOW_HEADERS = (
 # ================================================= #
 # ******************* 日志 配置  ******************* #
 # ================================================= #
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(module)s %(lineno)d %(message)s'
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'handlers': {
-        'console': {
-            # 实际开发建议使用WARNING
-            'level': 'WARNING',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'file': {
-            # 实际开发建议使用ERROR
-            'level': 'ERROR',
-            'class': 'utils.common_logger.InterceptTimedRotatingFileHandler',
-            # 日志位置,日志文件名
-            'filename': os.path.join(BASE_DIR, "logs", "mi.log"),
-            # 日志文件的最大值,这里我们设置300M
-            # 'maxBytes': 300 * 1024 * 1024,
-            # 日志文件的数量,设置最大日志数量为10
-            # 'backupCount': 10,
-            # 日志格式:详细格式
-            'formatter': 'verbose',
-        },
-    },
-    # 日志对象
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file'],
-            'propagate': True,  # 是否让日志信息继续冒泡给其他的日志处理系统
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(module)s %(lineno)d %(message)s'
+#         },
+#     },
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             # 实际开发建议使用WARNING
+#             'level': 'WARNING',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple'
+#         },
+#         'file': {
+#             # 实际开发建议使用ERROR
+#             'level': 'ERROR',
+#             'class': 'utils.common_logger.InterceptTimedRotatingFileHandler',
+#             # 日志位置,日志文件名
+#             'filename': os.path.join(BASE_DIR, "logs", "mi.log"),
+#             # 日志文件的最大值,这里我们设置300M
+#             # 'maxBytes': 300 * 1024 * 1024,
+#             # 日志文件的数量,设置最大日志数量为10
+#             # 'backupCount': 10,
+#             # 日志格式:详细格式
+#             'formatter': 'verbose',
+#         },
+#     },
+#     # 日志对象
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console', 'file'],
+#             'propagate': True,  # 是否让日志信息继续冒泡给其他的日志处理系统
+#         },
+#     }
+# }
 
 # LOGGING_CONFIG = "utils.common_logger.simple_log_injector"
 
@@ -230,13 +231,11 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
 # 时区配置
 CELERY_TIMEZONE = 'Asia/Shanghai'
-
-# from datetime import timedelta
-#
-# CELERY_BEAT_SCHEDULE = {
-#     'mysql_backup': {
-#         'task': 'system.tasks.mysql_backup',
-#         'schedule': timedelta(seconds=5),
-#         'args': ()
-#     },
-# }
+# django-celery-beat定时任务配置
+CELERY_BEAT_SCHEDULE = {
+    'mysql_backup': {
+        'task': 'system.tasks.backup_database',
+        'schedule': timedelta(hours=1),
+        'args': ()
+    },
+}

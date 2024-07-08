@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/v1/course/', include('course.urls')),
     path('api/v1/member/', include('member.urls')),
     path('api/v1/mall/', include('mall.urls')),
+    path('api/v1/system/', include('system.urls')),
 ]
