@@ -180,7 +180,7 @@ LOGGING = {
     }
 }
 
-LOGGING_CONFIG = "utils.common_logger.simple_log_injector"
+# LOGGING_CONFIG = "utils.common_logger.simple_log_injector"
 
 # ================================================= #
 # ******************* redis 配置  ******************* #
