@@ -7,7 +7,7 @@
 """
 from rest_framework.views import exception_handler as drf_exception_handler
 from rest_framework.response import Response
-import logging
+import loguru
 
 
 def exception_handler(exc, context):
@@ -20,7 +20,7 @@ def exception_handler(exc, context):
         user_id = request.user.id
     except:
         user_id = '匿名用户'
-    logging.error(f"{str(exc)} {user_id} {ip} {path} {method} {exc} {view}")
+    loguru.logger.error(f"{str(exc)} {user_id} {ip} {path} {method} {exc} {view}")
     res = drf_exception_handler(exc, context)
     if res:
         if isinstance(res.data, dict):

@@ -1,10 +1,7 @@
 import subprocess
 import datetime
 import os
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'membership_api.settings.dev')
 from django.conf import settings
-
 from celery import shared_task
 
 
@@ -16,9 +13,9 @@ def backup_database():
     '''
     db_name = settings.DATABASES['default']['NAME']
 
-    backup_dir = settings.BASE_DIR / 'sql_backup'  # 获取脚本所在目录的绝对路径
+    backup_dir = settings.BASE_DIR / 'sql_backup'
     os.makedirs(backup_dir, exist_ok=True)
-    timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    timestamp = datetime.datetime.now().strftime('%Y%m%d%H')
     backup_name = f'{db_name}_{timestamp}.sql'
     backup_file = os.path.join(backup_dir, backup_name)
 
@@ -28,7 +25,7 @@ def backup_database():
         '--host=' + settings.DATABASES['default']['HOST'],
         '--port=' + str(settings.DATABASES['default']['PORT']),
         '--password=' + settings.DATABASES['default']['PASSWORD'],
-        settings.DATABASES['default']['NAME'],
+        db_name,
         '--result-file=' + backup_file,
         '--single-transaction',  # 用于InnoDB，保证一致性备份
         '--quick',  # 加快备份速度
