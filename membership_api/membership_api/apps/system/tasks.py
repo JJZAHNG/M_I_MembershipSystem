@@ -10,6 +10,10 @@ from celery import shared_task
 
 @shared_task
 def backup_database():
+    '''
+    做成celery定时任务
+    定期将数据库数据保存成sql文件
+    '''
     db_name = settings.DATABASES['default']['NAME']
 
     backup_dir = settings.BASE_DIR / 'sql_backup'  # 获取脚本所在目录的绝对路径

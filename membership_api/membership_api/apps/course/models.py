@@ -3,6 +3,10 @@ from utils.common_model import BaseModel
 
 
 class CourseSort(BaseModel):
+    '''
+    课程分类表
+    根据分类定价格以及积分数量
+    '''
     grade_choice = (
         (1, '小学'),
         (2, '初中'),
@@ -26,6 +30,9 @@ class CourseSort(BaseModel):
 
 
 class Course(BaseModel):
+    '''
+    课程
+    '''
     name = models.CharField(max_length=255, verbose_name='课程名称')
     total_hour = models.IntegerField(verbose_name='总课时')
     completed = models.IntegerField(verbose_name='已完成课时')
@@ -51,6 +58,9 @@ class Course(BaseModel):
 
 
 class Tag(BaseModel):
+    '''
+    课程标签表
+    '''
     name = models.CharField(max_length=255, verbose_name='标签名称')
     course = models.ManyToManyField(Course, verbose_name='课程标签', db_table='mi_tag_course')
 
@@ -59,6 +69,9 @@ class Tag(BaseModel):
 
 
 class Profile(BaseModel):
+    '''
+    课程资料表
+    '''
     profile = models.FileField(verbose_name='课程文件', upload_to='course/profile/')
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, verbose_name='课程', null=True,
                                blank=True)
@@ -68,6 +81,10 @@ class Profile(BaseModel):
 
 
 class Chapter(BaseModel):
+    '''
+    课程章节表
+    课程分章节（课时）
+    '''
     name = models.CharField(max_length=255, verbose_name='章节名称')
     hour = models.IntegerField(verbose_name='章节课时')
     start_time = models.DateTimeField(verbose_name='章节开始')
@@ -80,6 +97,11 @@ class Chapter(BaseModel):
 
 
 class HomeWork(BaseModel):
+    '''
+    作业表
+    作业与题目多对多
+    通过修改序列化深度，渲染题目选项
+    '''
     name = models.CharField(max_length=255, verbose_name='作业名称')
     start_time = models.DateTimeField(verbose_name='作业开始')
     end_time = models.DateTimeField(verbose_name='作业结束')
@@ -94,6 +116,9 @@ class HomeWork(BaseModel):
 
 
 class Topic(BaseModel):
+    '''
+    题目表
+    '''
     name = models.CharField(max_length=255, verbose_name='题目名称')
     type_choices = (
         (0, '单选题'),
@@ -108,12 +133,18 @@ class Topic(BaseModel):
     op_b = models.CharField(max_length=255, verbose_name='选项B', null=True, blank=True)
     op_c = models.CharField(max_length=255, verbose_name='选项C', null=True, blank=True)
     op_d = models.CharField(max_length=255, verbose_name='选项D', null=True, blank=True)
+    true_answer = models.TextField(verbose_name='正确答案')
 
     class Meta:
         db_table = 'mi_topic'
 
 
 class Answer(BaseModel):
+    '''
+    答题表
+    记录学生答案以及教师批改意见
+    通过调整序列化深度 获取题目及学生答案及正确答案
+    '''
     homework = models.ForeignKey('HomeWork', on_delete=models.SET_NULL, verbose_name='作业', null=True,
                                  blank=True)
     topic = models.ForeignKey('Topic', on_delete=models.SET_NULL, verbose_name='题目', null=True,

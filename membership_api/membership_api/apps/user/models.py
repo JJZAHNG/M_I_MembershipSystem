@@ -5,6 +5,7 @@ from utils.common_model import BaseModel
 class AdminUser(BaseModel):
     username = models.CharField(max_length=255, verbose_name='管理员用户名')
     password = models.CharField(max_length=255, verbose_name='管理员密码')
+    avatar = models.ImageField(upload_to='avatar/admin/', verbose_name='头像', default='avatar/admin/default.png')
 
     class Meta:
         db_table = 'mi_admin_user'
